@@ -55,6 +55,11 @@
 /*
  *  Constants and macros:
  */
+/* added for accessibility */
+extern const int BASE_TEN;
+extern const int DIGIT_SPACING; 
+extern const int DIGIT_WIDTH;
+extern const int DIGIT_HEIGHT;
 
 /*
  *  Type declarations:
