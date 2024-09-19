@@ -78,8 +78,11 @@
  *  Internal macro definitions:
  */
 
-#define NUM_DIGITS	10
-
+#define NUM_DIGITS 10
+#define BASE_TEN 10 /* previously hardcoded */
+#define DIGIT_SPACING 32 /* previously hardcoded */
+#define DIGIT_WIDTH 30 /* previously hardcoded */
+#define DIGIT_HEIGHT 40 /* previously hardcoded */
 /*
  *  Internal type declarations:
  */
@@ -165,9 +168,10 @@ static void DrawDigit(display, window, digit, x, y)
 	int y;
 #endif
 {
-	/* Draw the digit in the window */
-	RenderShape(display, window, 
-		digitPixmaps[digit], digitPixmapsM[digit], x, y, 30, 40, True);
+  
+  /* Draw the digit in the window */
+  RenderShape(display, window, 
+		digitPixmaps[digit], digitPixmapsM[digit], x, y, DIGIT_WIDTH, DIGIT_HEIGHT, True);
 }
 
 #if NeedFunctionPrototypes
@@ -182,15 +186,15 @@ void DrawOutNumber(display, window, score, x, y)
 #endif
 {
 	int digit;
-
+  
 	/* Get the digit that we want from the score */
-	if (score / 10)
-		DrawOutNumber(display, window, (score / 10), x - 32, y);
+	if (score / BASE_TEN)
+		DrawOutNumber(display, window, (score / BASE_TEN), x - DIGIT_SPACING, y);
 
 	/* Work out the digit needed to draw */
-	digit = (int) (score % 10);
+	digit = (int) (score % BASE_TEN);
 
-	DrawDigit(display, window, digit, x - 32, y);
+	DrawDigit(display, window, digit, x - DIGIT_SPACING, y);
 }
 
 #if NeedFunctionPrototypes
@@ -247,7 +251,7 @@ void DisplayScore(display, window, score)
 	/* Draw a zero if no score */
 	if (score == 0L)
 		RenderShape(display, window, 
-			digitPixmaps[0], digitPixmapsM[0], 192, 0, 30, 40, True);
+			digitPixmaps[0], digitPixmapsM[0], 192, 0, DIGIT_WIDTH, DIGIT_HEIGHT, True);
 	else
 		/* Draw the score digits rescursively */
 		DrawOutNumber(display, window, score, 224, 0);
